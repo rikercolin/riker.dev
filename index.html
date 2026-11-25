@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Colin Riker — Embedded & Firmware Engineer</title>
+  <meta name="description" content="Colin Riker, computer engineer (University of Michigan, Dec 2026). Embedded systems, firmware, and hardware projects.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Colin Riker">
+  <meta property="og:description" content="Computer engineer. Embedded systems, firmware, Arch, and too many Minecraft plugins.">
+  <meta property="og:image" content="https://riker.dev/colin.jpg">
+  <meta property="og:url" content="https://riker.dev/">
+  <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: "Inter";
+      src: url("fonts/inter.woff2") format("woff2");
+      font-weight: 100 900;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Newsreader";
+      src: url("fonts/newsreader-500.woff2") format("woff2");
+      font-weight: 500;
+      font-display: swap;
+    }
+    :root {
+      /* Prairie palette (Frank Lloyd Wright-inspired) */
+      --bg: #f4ebdb;      /* parchment: center column */
+      --outer: #d9c6a3;   /* sand: side fill */
+      --fg: #3a2a1d;      /* walnut */
+      --muted: #6f5b47;   /* umber */
+      --rule: #a88d68;    /* oak: lines */
+      --accent: #9e3324;  /* Cherokee red: section labels */
+      --blue: #2f5f7f;    /* art-glass blue */
+      --ochre: #c9963f;   /* art-glass ochre */
+      --hover: var(--blue);
+      --link-line: #b9a382;
+      --serif: "Newsreader", Georgia, serif;
+      --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--outer); }
+    ::selection { background: #e6c98f; color: var(--fg); }
+    body {
+      margin: 0;
+      color: var(--fg);
+      font: 17px/1.7 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      max-width: 800px;            /* 680px of text + 60px padding each side */
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 72px 60px 96px;
+      padding-top: 40px;
+      background: var(--bg);
+      border-left: 5px double var(--rule);
+      border-right: 5px double var(--rule);
+    }
+    @media (max-width: 800px) {
+      main { padding: 32px 24px 80px; border: 0; }
+    }
+
+    /* Prairie art-glass motif: squares + double rule */
+    .motif { display: flex; align-items: center; gap: 8px; margin: 0 0 44px; }
+    .motif .sq { flex: none; width: 10px; height: 10px; }
+    .motif .sq.red { background: var(--accent); }
+    .motif .sq.blue { background: var(--blue); width: 6px; height: 6px; }
+    .motif .sq.ochre { background: var(--ochre); }
+    .motif .sq.open { border: 1px solid var(--rule); }
+    .motif .bar { flex: 1; height: 6px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .motif.end { margin: 0; }
+    footer .copy { margin: 14px 0 0; }
+    a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--link-line); text-underline-offset: 3px; }
+    a:hover { color: var(--hover); text-decoration-color: var(--hover); }
+
+    .id { display: flex; align-items: center; gap: 22px; margin: 0 0 22px; }
+    .avatar {
+      flex: none;
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      outline: 1px solid var(--rule);
+      outline-offset: 3px;
+    }
+    @media (max-width: 420px) { .avatar { width: 72px; height: 72px; } .id { gap: 16px; } }
+    header h1 {
+      font: 500 2.6rem/1.1 var(--serif);
+      margin: 0 0 4px;
+      letter-spacing: -0.01em;
+    }
+    header .tag { color: var(--muted); font-size: 1rem; margin: 0; }
+    nav.links { display: flex; flex-wrap: wrap; gap: 6px 22px; font: 16px var(--sans); }
+
+    section { margin-top: 56px; }
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font: 600 0.8rem var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+    h2::before { content: ""; flex: none; width: 8px; height: 8px; background: var(--accent); }
+    h2::after { content: ""; flex: 1; height: 4px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    p { margin: 0 0 14px; }
+
+    .project { margin: 0 0 30px; padding-bottom: 28px; border-bottom: 1px solid #e0d1b8; position: relative; }
+    .project:last-child { border-bottom: 0; padding-bottom: 0; }
+    .project:not(:last-child)::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 5px; height: 5px; background: var(--blue); }
+    .project h3 { font: 600 1.15rem var(--sans); margin: 0; }
+    .project .meta { color: var(--muted); font: 15px/1.5 var(--sans); margin: 3px 0 10px; }
+    .project p { margin: 0 0 8px; }
+    .project .docs { font: 15px var(--sans); display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .project .docs a::before { content: "→ "; color: var(--muted); }
+
+    .thing { margin: 0 0 28px; }
+    .thing h3 { font: 600 1.15rem var(--sans); margin: 0 0 6px; }
+    .talk { margin: 0 0 22px; }
+    .talk-title { font-weight: 600; font-size: 1.1rem; }
+    .talk .docs { font: 15px var(--sans); display: flex; gap: 4px 16px; margin-top: 6px; }
+    .talk .docs a::before { content: "→ "; color: var(--muted); }
+    .talk .meta { color: var(--muted); font: 15px/1.5 var(--sans); margin: 3px 0 8px; }
+    .talk p { margin: 0; }
+
+    footer {
+      margin-top: 72px;
+      color: var(--muted);
+      font: 14px var(--sans);
+    }
+    code { font: 0.9em var(--mono); }
+  </style>
+</head>
+<body>
+<main>
+
+  <div class="motif" aria-hidden="true">
+    <span class="sq red"></span><span class="sq blue"></span><span class="sq ochre"></span><span class="sq open"></span>
+    <span class="bar"></span>
+  </div>
+
+  <header>
+    <div class="id">
+      <img class="avatar" src="colin.jpg" alt="Colin Riker" width="96" height="96">
+      <div>
+        <h1>Colin Riker</h1>
+        <p class="tag">Computer engineer · embedded systems &amp; firmware · Ann Arbor, MI</p>
+      </div>
+    </div>
+    <nav class="links">
+      <a href="mailto:rikercolin@gmail.com">email</a>
+      <a href="https://github.com/ColinRiker">github</a>
+      <a href="ColinRiker_Resume.pdf">resume</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      I&rsquo;ll never forget standing on the playground in 5th grade, annoyed that my friend wouldn&rsquo;t stop
+      talking about Minecraft. Like every other kid, my free time soon became Minecraft time. I was always the one
+      hosting servers and tinkering with configs, until I wanted to write my own code: Bukkit plugins for the
+      server I spent most of my childhood on (it&rsquo;s somehow still going strong). It was truly terrible Java,
+      but you have to start somewhere. And at 16 I got to test in production with 300&ndash;500 concurrent players,
+      which I still can&rsquo;t believe anyone let me do.
+    </p>
+    <p>
+      From there I got into Linux, and not just any Linux. The &ldquo;cool kids&rdquo; got to me, and that same
+      year, after six tries, I could officially say &ldquo;I use Arch, btw.&rdquo; I fell in love with never having
+      to rip out Edge or OneDrive, or say no to Office 365 again. True freedom. A decade later, I can&rsquo;t imagine
+      developing on anything else.
+    </p>
+    <p>
+      At the University of Michigan I finally got to do some amazing things: designing processors, digging into
+      microarchitecture, building robots and novel sensors. It&rsquo;s hard to pick just one thing after that. I still
+      love programming by hand and picking up new languages (Zig will save us all), and I keep thinking about sensors
+      built into geometries you can only make with FDM printing.
+    </p>
+  </section>
+
+  <section id="interest">
+    <h2>Current things</h2>
+    <!-- One <article class="thing"> per current thing. -->
+    <article class="thing">
+      <h3>Zig</h3>
+      <p>
+        Lately I've been spending time with Zig. What draws me to it from the embedded side:
+        explicit allocators, <code>comptime</code> in place of preprocessor macros, easy
+        cross-compilation, and drop-in interop with existing C code.
+      </p>
+      <!-- TODO(Colin): what you're building or learning with it, and what you think so far. -->
+    </article>
+  </section>
+
+  <section id="reading">
+    <h2>Things to watch &amp; read</h2>
+    <!-- Add one <article class="talk"> per entry. -->
+    <article class="talk">
+      <a class="talk-title" href="https://www.youtube.com/watch?v=zLZwpH5lCD4">Don't Take the Black Pill</a>
+      <div class="meta">Andrew Kelley · SSW 2026</div>
+      <p>An argument against the nihilism creeping into software, and for building tools that leave users in control.</p>
+      <div class="docs">
+        <a href="https://www.youtube.com/watch?v=zLZwpH5lCD4">watch</a>
+        <a href="https://andrewkelley.me/post/dont-take-black-pill.html">read</a>
+      </div>
+    </article>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <article class="project">
+      <h3>DrawBot</h3>
+      <div class="meta">Advanced Embedded Systems capstone · team of 6 · Fall 2025</div>
+      <p>
+        A wall-climbing robot that draws images on a whiteboard. I led mechanical design and fabrication
+        in Fusion 360 across nine printed iterations, bringing it to 3.25 lb against a 10 lb limit.
+        It runs on a custom ESP32-S3 PCB with FreeRTOS, PID drive control and OpenCV ArUco localization.
+      </p>
+      <div class="docs">
+        <a href="docs/drawbot-poster.pdf">poster</a>
+        <a href="docs/drawbot-report.pdf">report</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <h3>FirePatch</h3>
+      <div class="meta">How to Make (Almost) Anything Interactive (grad) · team of 4 · Fall 2025</div>
+      <p>
+        A firefighter jacket with temperature-sensing and SOS patches. I built the temperature chain:
+        K-type thermocouples with AD8495 amplifiers and cold-junction calibration, reading up to 650 °C.
+        An ESP32 hub streams temperature, SOS status and GPS over ad-hoc Wi-Fi to a live dashboard.
+      </p>
+      <div class="docs">
+        <a href="docs/firepatch-poster.pdf">poster</a>
+        <a href="docs/firepatch-slides.pdf">slides</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <h3>Phone Lock Box</h3>
+      <div class="meta">Intro to Embedded Systems · team of 4 · Winter 2025</div>
+      <p>
+        A timed lock box that keeps your phone away while you study. I wrote the core firmware around a
+        custom real-time event scheduler and state machine on an STM32 Nucleo. I also built NFC phone detection
+        and an interrupt-driven emergency unlock, and integrated the accelerometer, LCD, rotary encoder and solenoid lock.
+      </p>
+      <div class="docs">
+        <a href="docs/phone-lockbox-poster.pdf">poster</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <h3>R10K Out-of-Order Processor</h3>
+      <div class="meta">Computer Architecture capstone · team of 6 · Fall 2024</div>
+      <p>
+        A 2-way superscalar out-of-order CPU in SystemVerilog. I wrote the first reorder buffer, designed
+        the load/store units, and worked on testing and optimization. The final design ran at 1.34 weighted CPI at a 9.5 ns clock.
+        Speculative loads took CPI from 1.90 to 1.31.
+      </p>
+    </article>
+
+    <article class="project">
+      <h3>Heat-Recovery Ventilator Controller</h3>
+      <div class="meta">Research assistant, 2226 Midwest net-zero building · 2023–2024</div>
+      <p>
+        I built the embedded controller for an active heat-recovery ventilator: a C fan controller on a Raspberry Pi
+        Zero 2 using hardware PWM, linked to the project's sensor nodes over MQTT.
+      </p>
+      <div class="docs">
+        <a href="docs/hrv-controller-poster.pdf">poster</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <h3>CUDA Convolution</h3>
+      <div class="meta">Applied GPU Programming</div>
+      <p>
+        A GPU convolution kernel in CUDA, optimized with shared-memory tiling.
+      </p>
+    </article>
+
+    <article class="project">
+      <h3>Regular Expressions for Partial Data</h3>
+      <div class="meta">Research intern, DryvIQ via U-M UROP · Summer 2022</div>
+      <p>
+        I improved open-source address-parsing regexes for finding personal data in documents.
+        F-measure rose 27% on a mixed-country set and 9% on a US set. I also built the Python evaluation
+        tool and labeled 5,400+ addresses.
+      </p>
+      <div class="docs">
+        <a href="docs/address-regex-poster.pdf">poster</a>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <div class="motif end" aria-hidden="true">
+      <span class="bar"></span>
+      <span class="sq open"></span><span class="sq ochre"></span><span class="sq blue"></span><span class="sq red"></span>
+    </div>
+    <p class="copy">© 2026 Colin Riker · riker.dev</p>
+  </footer>
+
+</main>
+</body>
+</html>
