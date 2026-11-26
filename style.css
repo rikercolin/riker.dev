@@ -1,0 +1,122 @@
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("fonts/newsreader-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+:root {
+  /* Prairie palette (Frank Lloyd Wright-inspired) */
+  --bg: #f4ebdb;      /* parchment: center column */
+  --outer: #d9c6a3;   /* sand: side fill */
+  --fg: #3a2a1d;      /* walnut */
+  --muted: #6f5b47;   /* umber */
+  --rule: #a88d68;    /* oak: lines */
+  --accent: #9e3324;  /* Cherokee red: section labels */
+  --blue: #2f5f7f;    /* art-glass blue */
+  --ochre: #c9963f;   /* art-glass ochre */
+  --hover: var(--blue);
+  --link-line: #b9a382;
+  --serif: "Newsreader", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--outer); }
+::selection { background: #e6c98f; color: var(--fg); }
+body {
+  margin: 0;
+  color: var(--fg);
+  font: 17px/1.7 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+main {
+  max-width: 800px;            /* 680px of text + 60px padding each side */
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 72px 60px 96px;
+  padding-top: 40px;
+  background: var(--bg);
+  border-left: 5px double var(--rule);
+  border-right: 5px double var(--rule);
+}
+@media (max-width: 800px) {
+  main { padding: 32px 24px 80px; border: 0; }
+}
+
+/* Prairie art-glass motif: squares + double rule */
+.motif { display: flex; align-items: center; gap: 8px; margin: 0 0 44px; }
+.motif .sq { flex: none; width: 10px; height: 10px; }
+.motif .sq.red { background: var(--accent); }
+.motif .sq.blue { background: var(--blue); width: 6px; height: 6px; }
+.motif .sq.ochre { background: var(--ochre); }
+.motif .sq.open { border: 1px solid var(--rule); }
+.motif .bar { flex: 1; height: 6px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.motif.end { margin: 0; }
+footer .copy { margin: 14px 0 0; }
+a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--link-line); text-underline-offset: 3px; }
+a:hover { color: var(--hover); text-decoration-color: var(--hover); }
+
+.id { display: flex; align-items: center; gap: 22px; margin: 0 0 22px; }
+.avatar {
+  flex: none;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  outline: 1px solid var(--rule);
+  outline-offset: 3px;
+}
+@media (max-width: 420px) { .avatar { width: 72px; height: 72px; } .id { gap: 16px; } }
+header h1 {
+  font: 500 2.6rem/1.1 var(--serif);
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+header .tag { color: var(--muted); font-size: 1rem; margin: 0; }
+nav.links { display: flex; flex-wrap: wrap; gap: 6px 22px; font: 16px var(--sans); }
+
+section { margin-top: 56px; }
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 600 0.8rem var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 20px;
+}
+h2::before { content: ""; flex: none; width: 8px; height: 8px; background: var(--accent); }
+h2::after { content: ""; flex: 1; height: 4px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+p { margin: 0 0 14px; }
+
+.project { margin: 0 0 30px; padding-bottom: 28px; border-bottom: 1px solid #e0d1b8; position: relative; }
+.project:last-child { border-bottom: 0; padding-bottom: 0; }
+.project:not(:last-child)::after { content: ""; position: absolute; left: 0; bottom: -3px; width: 5px; height: 5px; background: var(--blue); }
+.project h3 { font: 600 1.15rem var(--sans); margin: 0; }
+.project .meta { color: var(--muted); font: 15px/1.5 var(--sans); margin: 3px 0 10px; }
+.project p { margin: 0 0 8px; }
+.project .docs { font: 15px var(--sans); display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.project .docs a::before { content: "→ "; color: var(--muted); }
+
+.thing { margin: 0 0 28px; }
+.thing h3 { font: 600 1.15rem var(--sans); margin: 0 0 6px; }
+.talk { margin: 0 0 22px; }
+.talk-title { font-weight: 600; font-size: 1.1rem; }
+.talk .docs { font: 15px var(--sans); display: flex; gap: 4px 16px; margin-top: 6px; }
+.talk .docs a::before { content: "→ "; color: var(--muted); }
+.talk .meta { color: var(--muted); font: 15px/1.5 var(--sans); margin: 3px 0 8px; }
+.talk p { margin: 0; }
+
+footer {
+  margin-top: 72px;
+  color: var(--muted);
+  font: 14px var(--sans);
+}
+code { font: 0.9em var(--mono); }
